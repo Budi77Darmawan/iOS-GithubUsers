@@ -101,6 +101,15 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
+		DB30B60C2656BE9D00F10A31 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				DBA76E2E264E6526006F1C21 /* UserTableViewCell.swift */,
+				DBA76E2F264E6526006F1C21 /* UserTableViewCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		DB59123026502DBB002DD814 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -113,7 +122,6 @@
 			isa = PBXGroup;
 			children = (
 				DBA76E1F264E59CB006F1C21 /* Main.storyboard */,
-				DBA76E2F264E6526006F1C21 /* UserTableViewCell.xib */,
 				DBA76E24264E59CC006F1C21 /* LaunchScreen.storyboard */,
 			);
 			path = View;
@@ -131,8 +139,8 @@
 		DB9186A92650B87500B384AD /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				DB30B60C2656BE9D00F10A31 /* Cell */,
 				DBA76E1D264E59CB006F1C21 /* ViewController.swift */,
-				DBA76E2E264E6526006F1C21 /* UserTableViewCell.swift */,
 				DB5279DF2651132C00A7213B /* DetailViewController.swift */,
 				DB5279E32651202200A7213B /* ProfileViewController.swift */,
 			);
