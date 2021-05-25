@@ -15,10 +15,11 @@ class ViewController: UIViewController {
     
     let searchController = UISearchController(searchResultsController: nil)
     private var debouncer: Debouncer!
-    private var searchText: String = ""
-    private var searchUrl: String = ""
+    private var searchText = ""
+    private var searchUrl = ""
     private var users: [User] = []
-    private var username: String = ""
+    private var username = ""
+    private var isSearching = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +29,8 @@ class ViewController: UIViewController {
         usersTableView.dataSource = self
         usersTableView.delegate = self
         usersTableView.register(UINib(nibName: "UserTableViewCell", bundle: nil), forCellReuseIdentifier: "UserCell")
-        usersTableView.isHidden = true
+        usersTableView.tableFooterView = UIView()
+        showBackgroundTable(true)
         
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
@@ -39,6 +41,22 @@ class ViewController: UIViewController {
     
     @IBAction func iconProfile(_ sender: Any) {
         performSegue(withIdentifier: "gotoProfile", sender: self)
+    }
+    
+    @IBAction func iconFavorite(_ sender: Any) {
+        performSegue(withIdentifier: "gotoFavorite", sender: self)
+    }
+    
+    private func showBackgroundTable(_ isVisible: Bool) {
+        if isVisible {
+            if isSearching {
+                usersTableView.setEmptyViewWithImage(title: "User not found!", message: "Please check the search username again.", messageImage: UIImage(named: "not_found")!)
+            } else {
+                usersTableView.setEmptyViewWithImage(title: "Waiting to search!", message: "Search result will appear here.", messageImage: UIImage(named: "search")!)
+            }
+        } else {
+            usersTableView.restore()
+        }
     }
 
     private func fetchData() {
@@ -52,22 +70,21 @@ class ViewController: UIViewController {
                         let users = try JSONDecoder().decode(Users.self, from: data)
                         self.users = users.items
                         if !self.users.isEmpty {
-                            self.visibleTable(true)
-                            self.usersTableView.reloadData()
-                            if self.usersTableView.contentSize.height < self.usersTableView.frame.size.height {
-                                self.usersTableView.isScrollEnabled = false
-                             }
-                            else {
-                                self.usersTableView.isScrollEnabled = true
-                             }
+                            self.showBackgroundTable(false)
                             print(users)
                         } else {
-                            self.visibleTable(false)
-                            print("Not found")
+                            self.showBackgroundTable(true)
+                            print("Not found users")
+                        }
+                        self.usersTableView.isHidden = false
+                        self.usersTableView.reloadData()
+                        if !self.users.isEmpty {
+                            self.usersTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableView.ScrollPosition.top, animated: true)
                         }
                         self.progressIndicator.stopAnimating()
                     } catch {
                         print("Error Decoder -> \(error)")
+                        self.usersTableView.isHidden = false
                         self.progressIndicator.stopAnimating()
                     }
                 case .failure(let error):
@@ -76,10 +93,6 @@ class ViewController: UIViewController {
                 }
         }
     }
-
-    func visibleTable(_ visible: Bool) {
-        self.usersTableView.isHidden = !visible
-    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let sceneDetail = segue.destination as? DetailViewController else {
@@ -87,7 +100,6 @@ class ViewController: UIViewController {
         }
         sceneDetail.username = self.username
     }
-    
 }
     
 extension ViewController: UITableViewDataSource {
@@ -126,12 +138,18 @@ extension ViewController: UISearchResultsUpdating {
         }
         self.searchText = searchText
 
-        visibleTable(false)
+        self.usersTableView.isHidden = true
         if self.searchText.isEmpty {
+            isSearching = false
+            showBackgroundTable(true)
+            users = []
+            self.usersTableView.reloadData()
+            self.usersTableView.isHidden = false
             self.progressIndicator.stopAnimating()
             debouncer.cancel()
             print("Empty search")
         } else {
+            isSearching = true
             let baseSearchUrl = Services.BaseAPI.User.search
             self.searchUrl = baseSearchUrl.replacingOccurrences(of: "{username}", with: searchText)
             self.progressIndicator.startAnimating()

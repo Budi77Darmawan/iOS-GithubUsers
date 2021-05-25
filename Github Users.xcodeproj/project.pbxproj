@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		DB2102192652BDF8003CA7E7 /* SearchBarExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2102182652BDF8003CA7E7 /* SearchBarExt.swift */; };
 		DB21021B2652C2C5003CA7E7 /* ImageExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB21021A2652C2C5003CA7E7 /* ImageExt.swift */; };
+		DB30B6102656C7A800F10A31 /* TableViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB30B60F2656C7A800F10A31 /* TableViewExt.swift */; };
 		DB5279E02651132C00A7213B /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5279DF2651132C00A7213B /* DetailViewController.swift */; };
 		DB5279E42651202200A7213B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5279E32651202200A7213B /* ProfileViewController.swift */; };
 		DB59123226502DE3002DD814 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB59123126502DE3002DD814 /* Users.swift */; };
@@ -24,6 +25,8 @@
 		DBA76E31264E6526006F1C21 /* UserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DBA76E2F264E6526006F1C21 /* UserTableViewCell.xib */; };
 		DBAA7133264FA0470089A90D /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAA7132264FA0470089A90D /* Debouncer.swift */; };
 		DBAA7136264FB03E0089A90D /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAA7135264FB03E0089A90D /* Services.swift */; };
+		DBF3B26026586B1100FC65A0 /* ObjRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF3B25F26586B1100FC65A0 /* ObjRealm.swift */; };
+		DBF3B264265874C700FC65A0 /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF3B263265874C700FC65A0 /* FavoriteViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -46,6 +49,7 @@
 		A993A47233D95DB98CB1CE32 /* Pods-Github Users.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Github Users.debug.xcconfig"; path = "Target Support Files/Pods-Github Users/Pods-Github Users.debug.xcconfig"; sourceTree = "<group>"; };
 		DB2102182652BDF8003CA7E7 /* SearchBarExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarExt.swift; sourceTree = "<group>"; };
 		DB21021A2652C2C5003CA7E7 /* ImageExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExt.swift; sourceTree = "<group>"; };
+		DB30B60F2656C7A800F10A31 /* TableViewExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewExt.swift; sourceTree = "<group>"; };
 		DB5279DF2651132C00A7213B /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		DB5279E32651202200A7213B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		DB59123126502DE3002DD814 /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
@@ -61,6 +65,8 @@
 		DBA76E2F264E6526006F1C21 /* UserTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserTableViewCell.xib; sourceTree = "<group>"; };
 		DBAA7132264FA0470089A90D /* Debouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
 		DBAA7135264FB03E0089A90D /* Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
+		DBF3B25F26586B1100FC65A0 /* ObjRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjRealm.swift; sourceTree = "<group>"; };
+		DBF3B263265874C700FC65A0 /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,13 +98,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		DB21021C2652C68A003CA7E7 /* Extension */ = {
+		DB21021C2652C68A003CA7E7 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				DB2102182652BDF8003CA7E7 /* SearchBarExt.swift */,
 				DB21021A2652C2C5003CA7E7 /* ImageExt.swift */,
+				DB30B60F2656C7A800F10A31 /* TableViewExt.swift */,
 			);
-			path = Extension;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		DB30B60C2656BE9D00F10A31 /* Cell */ = {
@@ -114,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				DB59123126502DE3002DD814 /* Users.swift */,
+				DBF3B25F26586B1100FC65A0 /* ObjRealm.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -143,6 +151,7 @@
 				DBA76E1D264E59CB006F1C21 /* ViewController.swift */,
 				DB5279DF2651132C00A7213B /* DetailViewController.swift */,
 				DB5279E32651202200A7213B /* ProfileViewController.swift */,
+				DBF3B263265874C700FC65A0 /* FavoriteViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -191,7 +200,7 @@
 		DBAA7134264FA3070089A90D /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				DB21021C2652C68A003CA7E7 /* Extension */,
+				DB21021C2652C68A003CA7E7 /* Extensions */,
 				DBAA7132264FA0470089A90D /* Debouncer.swift */,
 			);
 			path = Utils;
@@ -318,9 +327,12 @@
 				DB2102192652BDF8003CA7E7 /* SearchBarExt.swift in Sources */,
 				DBA76E1A264E59CB006F1C21 /* AppDelegate.swift in Sources */,
 				DBAA7133264FA0470089A90D /* Debouncer.swift in Sources */,
+				DB30B6102656C7A800F10A31 /* TableViewExt.swift in Sources */,
+				DBF3B26026586B1100FC65A0 /* ObjRealm.swift in Sources */,
 				DB59123226502DE3002DD814 /* Users.swift in Sources */,
 				DBA76E1C264E59CB006F1C21 /* SceneDelegate.swift in Sources */,
 				DB5279E42651202200A7213B /* ProfileViewController.swift in Sources */,
+				DBF3B264265874C700FC65A0 /* FavoriteViewController.swift in Sources */,
 				DBAA7136264FB03E0089A90D /* Services.swift in Sources */,
 				DB21021B2652C2C5003CA7E7 /* ImageExt.swift in Sources */,
 				DB5279E02651132C00A7213B /* DetailViewController.swift in Sources */,
