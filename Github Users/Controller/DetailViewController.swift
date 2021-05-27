@@ -8,6 +8,7 @@
 import UIKit
 import Alamofire
 import RealmSwift
+import Toast_Swift
 
 class DetailViewController: UIViewController {
     
@@ -21,12 +22,12 @@ class DetailViewController: UIViewController {
     @IBOutlet var btnFavourite: UIButton!
     
     var username: String = ""
-    var isFavorite: Bool = false
     private var detailUser = DetailUser(id: 0, login: "", avatar_url: "", type: "", name: "", company: "", location: "", followers: 0, following: 0)
     private var followers: [User] = []
     private var following: [User] = []
     private var selectedTab: [User] = []
     private var isTabFollowers: Bool = true
+    private var isFavorite: Bool = false
     private var progress: Float = 0.25
     private var realmDB: Realm!
     
@@ -67,103 +68,59 @@ class DetailViewController: UIViewController {
                 realmDB.delete(realmDB.objects(ObjUser.self).filter("id=%@", t.id))
                 isFavorite = !isFavorite
                 btnFavourite.setImage(UIImage(named: "unfavorite"), for: .normal)
+                self.view.makeToast("Has been removed from the user's favorites list")
             }
         } else {
             try! realmDB.write {
                 realmDB.add(t)
                 isFavorite = !isFavorite
                 btnFavourite.setImage(UIImage(named: "favorite"), for: .normal)
+                self.view.makeToast("Successfully added to the user's favorite list")
             }
         }
     }
     
     private func initTableView() {
         userTableView.dataSource = self
-        userTableView.register(UINib(nibName: "UserTableViewCell", bundle: nil), forCellReuseIdentifier: "UserCell")
+        userTableView.register(UINib(nibName: "UserTableViewCell", bundle: nil), forCellReuseIdentifier: UserTableViewCell.reuseIdentifier)
         userTableView.tableFooterView = UIView()
     }
     
     private func fetchDataDetail() {
         if username.isEmpty { return }
-        var baseDetailUrl = Services.BaseAPI.User.detail
-        baseDetailUrl = baseDetailUrl.replacingOccurrences(of: "{username}", with: username)
-        
-        AF.request(baseDetailUrl, method: .get, headers: Services.headers)
-            .validate(statusCode: 200..<300)
-            .responseJSON { response in
-                switch response.result {
-                case .success:
-                    guard let data = response.data else { return }
-                    do {
-                        let detail = try JSONDecoder().decode(DetailUser.self, from: data)
-                        self.detailUser = detail
-                        self.setView()
-                        print("\nDetail User -> \(self.detailUser)\n")
-                    } catch {
-                        print("Error Decoder -> \(error)")
-                    }
-                    self.updateProgressBar()
-                case .failure(let error):
-                    print("Error -> \(error)")
-                    self.updateProgressBar()
-                }
+        ApiManager.shared.fetchDetailUser(username: username) { detail in
+            if detail != nil {
+                self.detailUser = detail!
+                self.setView()
+            }
+            self.updateProgressBar()
         }
     }
     
     private func fetchDataFollowers() {
         if username.isEmpty { return }
-        var baseFollowersUrl = Services.BaseAPI.User.followers
-        baseFollowersUrl = baseFollowersUrl.replacingOccurrences(of: "{username}", with: username)
-        
-        AF.request(baseFollowersUrl, method: .get, headers: Services.headers)
-            .validate(statusCode: 200..<300)
-            .responseJSON { response in
-                switch response.result {
-                case .success:
-                    guard let data = response.data else { return }
-                    do {
-                        self.followers = try JSONDecoder().decode([User].self, from: data)
-                        print("\nFollowers -> \(self.followers)\n")
-                        self.selectedTab = self.followers
-                        if !self.selectedTab.isEmpty {
-                            self.showBackgroundTable(false)
-                        } else {
-                            self.showBackgroundTable(true)
-                        }
-                        self.userTableView.reloadData()
-                    } catch {
-                        print("Error Decoder -> \(error)")
-                    }
-                    self.updateProgressBar()
-                case .failure(let error):
-                    print("Error -> \(error)")
-                    self.updateProgressBar()
-                }
+        ApiManager.shared.fecthFollowersUser(username: username) { listFollowers in
+            if listFollowers != nil {
+                self.followers = listFollowers!
+            }
+            self.selectedTab = self.followers
+            if !self.selectedTab.isEmpty {
+                self.showBackgroundTable(false)
+            } else {
+                self.showBackgroundTable(true)
+            }
+            self.userTableView.reloadData()
+            self.updateProgressBar()
         }
     }
     
     private func fetchDataFollowing() {
         if username.isEmpty { return }
-        var baseFollowingUrl = Services.BaseAPI.User.following
-        baseFollowingUrl = baseFollowingUrl.replacingOccurrences(of: "{username}", with: username)
-        
-        AF.request(baseFollowingUrl, method: .get, headers: Services.headers)
-            .validate(statusCode: 200..<300)
-            .responseJSON { response in
-                switch response.result {
-                case .success:
-                    guard let data = response.data else { return }
-                    do {
-                        self.following = try JSONDecoder().decode([User].self, from: data)
-                        print("\nFollowing -> \(self.following)\n")
-                    } catch {
-                        print("Error Decoder -> \(error)")
-                    }
-                    self.updateProgressBar()
-                case .failure(let error):
-                    print("Error -> \(error)")
-                    self.updateProgressBar()
-                }
+        ApiManager.shared.fecthFollowingUser(username: username) { listFollowing in
+            if listFollowing != nil {
+                self.following = listFollowing!
+            }
+            self.updateProgressBar()
         }
     }
     
@@ -176,12 +133,15 @@ class DetailViewController: UIViewController {
     }
         
     private func setView() {
-        photoUser.setImage(URL(string: detailUser.avatar_url)!)
         fullnameUser.text = detailUser.name ?? "No Name"
         usernameUser.text = ("@\(detailUser.login)")
         companyUser.text = detailUser.company ?? "-"
         locationUser.text = detailUser.location ?? "-"
         readDatabase()
+        guard let photoUserUrl = URL(string: detailUser.avatar_url) else {
+            return
+        }
+        photoUser.setImage(photoUserUrl)
     }
     
     private func readDatabase() {
@@ -242,15 +202,10 @@ extension DetailViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as? UserTableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: UserTableViewCell.reuseIdentifier, for: indexPath) as? UserTableViewCell {
         
             let user = self.selectedTab[indexPath.row]
-            cell.nameUser.text = user.login
-            cell.typeUser.text = user.type
-            
-            let photoUserUrl = URL(string: user.avatar_url)!
-            cell.photoUser.setImage(photoUserUrl)
-            cell.photoUser.makeRounded()
+            cell.configureCell(user)
             return cell
         } else {
             return UITableViewCell()

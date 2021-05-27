@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
 extension UIImageView {
     
@@ -18,13 +19,6 @@ extension UIImageView {
     }
     
     func setImage(_ imageURL: URL) {
-        DispatchQueue.global().async {
-            if let data = try? Data(contentsOf: imageURL) {
-            if let image = UIImage(data: data) {
-                DispatchQueue.main.async {
-                    self.image = image
-                }
-            }}
-        }
+        self.kf.setImage(with: imageURL, placeholder: UIImage(named: "profile"))
     }
 }

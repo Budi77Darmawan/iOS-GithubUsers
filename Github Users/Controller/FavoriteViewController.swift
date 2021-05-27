@@ -26,7 +26,7 @@ class FavoriteViewController: UIViewController {
         
         usersTableView.dataSource = self
         usersTableView.delegate = self
-        usersTableView.register(UINib(nibName: "UserTableViewCell", bundle: nil), forCellReuseIdentifier: "UserCell")
+        usersTableView.register(UINib(nibName: "UserTableViewCell", bundle: nil), forCellReuseIdentifier: UserTableViewCell.reuseIdentifier)
         usersTableView.tableFooterView = UIView()
     }
     
@@ -61,15 +61,10 @@ extension FavoriteViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as? UserTableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: UserTableViewCell.reuseIdentifier, for: indexPath) as? UserTableViewCell {
         
             let user = self.users[indexPath.row]
-            cell.nameUser.text = user.login
-            cell.typeUser.text = user.type
-            
-            let photoUserUrl = URL(string: user.avatar_url)!
-            cell.photoUser.setImage(photoUserUrl)
-            cell.photoUser.makeRounded()
+            cell.configureCell(user)
             return cell
         } else {
             return UITableViewCell()

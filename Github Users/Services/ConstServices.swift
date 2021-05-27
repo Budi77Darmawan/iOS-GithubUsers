@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-struct Services {
+struct ConstServices {
     
     static let headers: HTTPHeaders = [
         "Authorization": "token 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"
