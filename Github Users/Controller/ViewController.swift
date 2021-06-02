@@ -9,7 +9,6 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var progressIndicator: UIActivityIndicatorView!
     @IBOutlet weak var usersTableView: UITableView!
     
     private let searchController = UISearchController(searchResultsController: nil)
@@ -70,7 +69,7 @@ class ViewController: UIViewController {
             if !self.users.isEmpty {
                 self.usersTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableView.ScrollPosition.top, animated: true)
             }
-            self.progressIndicator.stopAnimating()
+            self.usersTableView.hideToastActivity()
         }
     }
     
@@ -112,20 +111,19 @@ extension ViewController: UISearchResultsUpdating {
             return
         }
         self.searchText = searchText
-
-        self.usersTableView.isHidden = true
+        
+        users = []
+        self.usersTableView.reloadData()
+        
         if self.searchText.isEmpty {
             isSearching = false
             showBackgroundTable(true)
-            users = []
-            self.usersTableView.reloadData()
-            self.usersTableView.isHidden = false
-            self.progressIndicator.stopAnimating()
+            self.usersTableView.hideToastActivity()
             debouncer.cancel()
-            print("Empty search")
         } else {
             isSearching = true
-            self.progressIndicator.startAnimating()
+            showBackgroundTable(false)
+            self.usersTableView.makeToastActivity(.center)
             debouncer.call()
         }
     }
