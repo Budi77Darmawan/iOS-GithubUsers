@@ -13,7 +13,7 @@
 		DB5279E02651132C00A7213B /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5279DF2651132C00A7213B /* DetailViewController.swift */; };
 		DB5279E42651202200A7213B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5279E32651202200A7213B /* ProfileViewController.swift */; };
 		DB59123226502DE3002DD814 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB59123126502DE3002DD814 /* Users.swift */; };
-		DB5F2329264F6F740061E754 /* BuildFile in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DB5F2329264F6F740061E754 /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DB8F50D0265D3FE0006EA287 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8F50CF265D3FE0006EA287 /* ApiManager.swift */; };
 		DBA76E1A264E59CB006F1C21 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA76E19264E59CB006F1C21 /* AppDelegate.swift */; };
 		DBA76E1C264E59CB006F1C21 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA76E1B264E59CB006F1C21 /* SceneDelegate.swift */; };
@@ -36,7 +36,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				DB5F2329264F6F740061E754 /* BuildFile in Embed Frameworks */,
+				DB5F2329264F6F740061E754 /* (null) in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;

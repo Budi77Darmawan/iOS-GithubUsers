@@ -11,6 +11,7 @@ class UserTableViewCell: UITableViewCell {
     
     static let reuseIdentifier = "UserTableViewCell"
 
+    @IBOutlet var cardView: UIView!
     @IBOutlet weak var photoUser: UIImageView!
     @IBOutlet weak var nameUser: UILabel!
     @IBOutlet weak var typeUser: UILabel!
@@ -28,6 +29,13 @@ class UserTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         photoUser.makeRounded()
+        cardView.backgroundColor = .white
+        cardView.layer.cornerRadius = 10
+        cardView.layer.masksToBounds = false
+        cardView.layer.shadowRadius = 2
+        cardView.layer.shadowOpacity = 0.7
+        cardView.layer.shadowOffset = CGSize(width: 0, height: 0.5)
+        cardView.layer.shadowColor =  UIColor.lightGray.cgColor
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

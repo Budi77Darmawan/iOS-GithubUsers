@@ -4,58 +4,72 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="90" id="KGk-i7-Jjw" customClass="UserTableViewCell" customModule="Github_Users" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="90"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="414" height="90"/>
+                <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="FRD-c1-HuK">
-                        <rect key="frame" x="15" y="15" width="384" height="60"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xlv-S8-Nf7">
+                        <rect key="frame" x="10" y="5" width="394" height="90"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rnk-U6-MdX">
-                                <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="Axo-ol-v05"/>
-                                    <constraint firstAttribute="width" constant="60" id="H4x-VG-dw9"/>
-                                </constraints>
-                            </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="est-0o-Gzg">
-                                <rect key="frame" x="80" y="0.0" width="304" height="60"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="FRD-c1-HuK">
+                                <rect key="frame" x="15" y="15" width="369" height="60"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T36-sc-C6V">
-                                        <rect key="frame" x="0.0" y="0.0" width="48" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jr1-fz-yFg">
-                                        <rect key="frame" x="0.0" y="30" width="39.5" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rnk-U6-MdX">
+                                        <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="Axo-ol-v05"/>
+                                            <constraint firstAttribute="width" constant="60" id="H4x-VG-dw9"/>
+                                        </constraints>
+                                    </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="est-0o-Gzg">
+                                        <rect key="frame" x="80" y="0.0" width="289" height="60"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T36-sc-C6V">
+                                                <rect key="frame" x="0.0" y="0.0" width="48" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jr1-fz-yFg">
+                                                <rect key="frame" x="0.0" y="30" width="39.5" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                             </stackView>
                         </subviews>
-                    </stackView>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="FRD-c1-HuK" firstAttribute="top" secondItem="xlv-S8-Nf7" secondAttribute="top" constant="15" id="JhL-Ir-jhF"/>
+                            <constraint firstItem="FRD-c1-HuK" firstAttribute="leading" secondItem="xlv-S8-Nf7" secondAttribute="leading" constant="15" id="PX8-YB-SK9"/>
+                            <constraint firstAttribute="trailing" secondItem="FRD-c1-HuK" secondAttribute="trailing" constant="10" id="dIr-0e-iUe"/>
+                            <constraint firstAttribute="bottom" secondItem="FRD-c1-HuK" secondAttribute="bottom" constant="15" id="iv6-mS-XE7"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="FRD-c1-HuK" secondAttribute="trailing" constant="15" id="26s-Dc-tuJ"/>
-                    <constraint firstItem="FRD-c1-HuK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="Ldh-Ku-86R"/>
-                    <constraint firstAttribute="bottom" secondItem="FRD-c1-HuK" secondAttribute="bottom" constant="15" id="NBr-fz-fTi"/>
-                    <constraint firstItem="FRD-c1-HuK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="Oh5-5r-iC1"/>
+                    <constraint firstItem="xlv-S8-Nf7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="ilO-cs-zRc"/>
+                    <constraint firstAttribute="bottom" secondItem="xlv-S8-Nf7" secondAttribute="bottom" constant="5" id="rAV-QT-wXf"/>
+                    <constraint firstItem="xlv-S8-Nf7" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="szX-P4-9cu"/>
+                    <constraint firstAttribute="trailing" secondItem="xlv-S8-Nf7" secondAttribute="trailing" constant="10" id="xSo-pl-dQH"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <accessibility key="accessibilityConfiguration" identifier="UserCell"/>
             <connections>
+                <outlet property="cardView" destination="xlv-S8-Nf7" id="BiG-rQ-6NW"/>
                 <outlet property="nameUser" destination="T36-sc-C6V" id="Ogq-90-Iwz"/>
                 <outlet property="photoUser" destination="rnk-U6-MdX" id="mST-ls-L2W"/>
                 <outlet property="typeUser" destination="jr1-fz-yFg" id="wkD-CP-KnX"/>
@@ -63,4 +77,9 @@
             <point key="canvasLocation" x="-28.985507246376812" y="112.5"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

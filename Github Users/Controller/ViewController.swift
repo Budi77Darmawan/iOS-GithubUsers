@@ -23,19 +23,24 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         debouncer = Debouncer(delay: 0.5, callback: fetchDataUsersByUsername)
-
-        usersTableView.dataSource = self
-        usersTableView.delegate = self
-        usersTableView.register(UINib(nibName: "UserTableViewCell", bundle: nil), forCellReuseIdentifier: UserTableViewCell.reuseIdentifier)
-        usersTableView.tableFooterView = UIView()
-        showBackgroundTable(true)
-        
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
-        definesPresentationContext = true
+        initTableView()
+        initNavBar()
+      
     }
+  
+    private func initTableView() {
+      usersTableView.register(UINib(nibName: "UserTableViewCell", bundle: nil), forCellReuseIdentifier: UserTableViewCell.reuseIdentifier)
+      usersTableView.tableFooterView = UIView()
+      showBackgroundTable(true)
+    }
+  
+  private func initNavBar() {
+      searchController.searchResultsUpdater = self
+      searchController.obscuresBackgroundDuringPresentation = false
+      navigationItem.searchController = searchController
+      navigationItem.hidesSearchBarWhenScrolling = false
+      definesPresentationContext = true
+  }
     
     @IBAction func iconProfile(_ sender: Any) {
         performSegue(withIdentifier: "gotoProfile", sender: self)
