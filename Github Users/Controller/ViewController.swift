@@ -17,11 +17,12 @@ class ViewController: UIViewController {
     private var users: [User] = []
     private var username = ""
     private var isSearching = false
-    
+    private var isFromDetail = false
+      
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        debouncer = Debouncer.init(delay: 0.5, callback: fetchDataUsersByUsername)
+        debouncer = Debouncer(delay: 0.5, callback: fetchDataUsersByUsername)
 
         usersTableView.dataSource = self
         usersTableView.delegate = self
@@ -100,6 +101,7 @@ extension ViewController: UITableViewDataSource {
 
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        isFromDetail = true
         username = users[indexPath.row].login
         performSegue(withIdentifier: "gotoDetail", sender: self)
     }
@@ -112,6 +114,12 @@ extension ViewController: UISearchResultsUpdating {
         }
         self.searchText = searchText
         
+        if isFromDetail {
+          isFromDetail = !isFromDetail
+          self.usersTableView.reloadData()
+          return
+        }
+      
         users = []
         self.usersTableView.reloadData()
         

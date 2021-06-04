@@ -12,6 +12,8 @@ import Toast_Swift
 
 class DetailViewController: UIViewController {
     
+    @IBOutlet var scrollView: UIScrollView!
+    @IBOutlet var tableViewLayoutConstraints: NSLayoutConstraint!
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var photoUser: UIImageView!
     @IBOutlet weak var fullnameUser: UILabel!
@@ -19,7 +21,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var companyUser: UILabel!
     @IBOutlet weak var locationUser: UILabel!
     @IBOutlet weak var userTableView: UITableView!
-    @IBOutlet var btnFavourite: UIButton!
+    private var btnFavourite: UIButton!
     
     var username: String = ""
     private var detailUser = DetailUser(id: 0, login: "", avatar_url: "", type: "", name: "", company: "", location: "", followers: 0, following: 0)
@@ -57,22 +59,23 @@ class DetailViewController: UIViewController {
     }
     
     @objc func btnFavouriteDidTap() {
-        let t = ObjUser()
-        t.id = detailUser.id
-        t.login = detailUser.login
-        t.avatar_url = detailUser.avatar_url
-        t.type = detailUser.type
+        let objUser = ObjUser()
+        objUser.id = detailUser.id
+        objUser.login = detailUser.login
+        objUser.avatar_url = detailUser.avatar_url
+        objUser.type = detailUser.type
 
+        self.view.hideToast()
         if isFavorite {
             try! realmDB.write {
-                realmDB.delete(realmDB.objects(ObjUser.self).filter("id=%@", t.id))
+                realmDB.delete(realmDB.objects(ObjUser.self).filter("id=%@", objUser.id))
                 isFavorite = !isFavorite
                 btnFavourite.setImage(UIImage(named: "unfavorite"), for: .normal)
                 self.view.makeToast("Has been removed from the user's favorites list")
             }
         } else {
             try! realmDB.write {
-                realmDB.add(t)
+                realmDB.add(objUser)
                 isFavorite = !isFavorite
                 btnFavourite.setImage(UIImage(named: "favorite"), for: .normal)
                 self.view.makeToast("Successfully added to the user's favorite list")
@@ -81,7 +84,6 @@ class DetailViewController: UIViewController {
     }
     
     private func initTableView() {
-        userTableView.dataSource = self
         userTableView.register(UINib(nibName: "UserTableViewCell", bundle: nil), forCellReuseIdentifier: UserTableViewCell.reuseIdentifier)
         userTableView.tableFooterView = UIView()
     }
@@ -104,12 +106,12 @@ class DetailViewController: UIViewController {
                 self.followers = listFollowers!
             }
             self.selectedTab = self.followers
+            self.userTableView.reloadData()
             if !self.selectedTab.isEmpty {
                 self.showBackgroundTable(false)
             } else {
                 self.showBackgroundTable(true)
             }
-            self.userTableView.reloadData()
             self.updateProgressBar()
         }
     }
@@ -172,8 +174,7 @@ class DetailViewController: UIViewController {
         }
     }
     
-    
-    @IBAction func selectedTab(_ sender: UISegmentedControl) {
+  @objc func selectedSegmented(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
             selectedTab = followers
@@ -185,13 +186,13 @@ class DetailViewController: UIViewController {
             selectedTab = followers
             isTabFollowers = true
         }
+        self.userTableView.reloadData()
         if !selectedTab.isEmpty {
             self.userTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableView.ScrollPosition.top, animated: true)
             self.showBackgroundTable(false)
         } else {
             self.showBackgroundTable(true)
         }
-        self.userTableView.reloadData()
     }
     
 }
@@ -211,4 +212,26 @@ extension DetailViewController: UITableViewDataSource {
             return UITableViewCell()
         }
     }
+  
+  func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        scrollView.layoutIfNeeded()
+        self.tableViewLayoutConstraints.constant = selectedTab.isEmpty ? 250 : self.userTableView.contentSize.height
+  }
+}
+
+extension DetailViewController: UITableViewDelegate {
+  func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    let header = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 40))
+    header.backgroundColor = .white
+    let segmentedControl = UISegmentedControl(items: ["Followers", "Following"])
+    segmentedControl.frame = header.bounds
+    segmentedControl.selectedSegmentIndex = isTabFollowers ? 0 : 1
+    segmentedControl.addTarget(self, action: #selector(selectedSegmented), for: .valueChanged)
+    header.addSubview(segmentedControl)
+    return header
+  }
+  
+  func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    return 40
+  }
 }
