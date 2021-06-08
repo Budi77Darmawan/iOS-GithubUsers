@@ -90,21 +90,28 @@ class DetailViewController: UIViewController {
     
     private func fetchDataDetail() {
         if username.isEmpty { return }
-        ApiManager.shared.fetchDetailUser(username: username) { detail in
-            if detail != nil {
-                self.detailUser = detail!
-                self.setView()
-            }
+        let detailUrl = ConstServices.BaseAPI.User.detail.replacingOccurrences(of: "{username}", with: username)
+        NetworkCall(url: detailUrl, params: nil).executeQuery() {
+          (result: Result<DetailUser, Error>) in
+          switch result{
+          case .success(let detail):
+            self.detailUser = detail
+            self.setView()
             self.updateProgressBar()
+          case .failure(let error):
+            print(error)
+          }
         }
     }
     
     private func fetchDataFollowers() {
         if username.isEmpty { return }
-        ApiManager.shared.fecthFollowersUser(username: username) { listFollowers in
-            if listFollowers != nil {
-                self.followers = listFollowers!
-            }
+        let followersUrl = ConstServices.BaseAPI.User.followers.replacingOccurrences(of: "{username}", with: username)
+        NetworkCall(url: followersUrl, params: nil).executeQuery() {
+          (result: Result<[User], Error>) in
+          switch result{
+          case .success(let listFollowers):
+            self.followers = listFollowers
             self.selectedTab = self.followers
             self.userTableView.reloadData()
             if !self.selectedTab.isEmpty {
@@ -113,16 +120,24 @@ class DetailViewController: UIViewController {
                 self.showBackgroundTable(true)
             }
             self.updateProgressBar()
+          case .failure(let error):
+            print(error)
+          }
         }
     }
     
     private func fetchDataFollowing() {
         if username.isEmpty { return }
-        ApiManager.shared.fecthFollowingUser(username: username) { listFollowing in
-            if listFollowing != nil {
-                self.following = listFollowing!
-            }
+        let followingUrl = ConstServices.BaseAPI.User.following.replacingOccurrences(of: "{username}", with: username)
+        NetworkCall(url: followingUrl, params: nil).executeQuery() {
+          (result: Result<[User], Error>) in
+          switch result{
+          case .success(let listFollowing):
+            self.following = listFollowing
             self.updateProgressBar()
+          case .failure(let error):
+            print(error)
+          }
         }
     }
     

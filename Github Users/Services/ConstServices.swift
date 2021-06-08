@@ -15,11 +15,12 @@ struct ConstServices {
     ]
     
     struct BaseAPI {
+      static let github = "https://api.github.com/"
         struct User {
-            static let search = "https://api.github.com/search/users?q={username}"
-            static let detail = "https://api.github.com/users/{username}"
-            static let followers = "https://api.github.com/users/{username}/followers"
-            static let following = "https://api.github.com/users/{username}/following"
+            static let search = "search/users"
+            static let detail = "users/{username}"
+            static let followers = "users/{username}/followers"
+            static let following = "users/{username}/following"
         }
     }
 }

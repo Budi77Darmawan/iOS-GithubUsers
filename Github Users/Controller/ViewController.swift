@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class ViewController: UIViewController {
     
@@ -63,19 +64,26 @@ class ViewController: UIViewController {
     }
 
     private func fetchDataUsersByUsername() {
-        ApiManager.shared.fetchUsersByUsername(username: searchText) { listUser in
-            self.users = listUser ?? []
+        let params: Parameters = ["q": searchText]
+        NetworkCall(url: ConstServices.BaseAPI.User.search, params: params).executeQuery() {
+          (result: Result<Users, Error>) in
+          switch result{
+          case .success(let Users):
+            self.users = Users.items
             if !self.users.isEmpty {
-                self.showBackgroundTable(false)
+              self.showBackgroundTable(false)
             } else {
-                self.showBackgroundTable(true)
+              self.showBackgroundTable(true)
             }
             self.usersTableView.isHidden = false
             self.usersTableView.reloadData()
             if !self.users.isEmpty {
-                self.usersTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableView.ScrollPosition.top, animated: true)
+              self.usersTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableView.ScrollPosition.top, animated: true)
             }
             self.usersTableView.hideToastActivity()
+          case .failure(let error):
+            print(error)
+          }
         }
     }
     
