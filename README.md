@@ -1,4 +1,4 @@
-# Submission: Belajar Fundamental Aplikasi iOS
+# Submission: Belajar Membuat Aplikasi iOS untuk Pemula
 
 ## Resource
 - Search : https://api.github.com/search/users?q=<strong>{username}</strong>
